@@ -1,31 +1,23 @@
-version: "3.8"
-
 services:
   mongo:
     image: mongo:6
     container_name: mongo_db
     restart: always
-    volumes:
-      - mongo_data:/data/db
 
   backend:
-    image: ${DOCKER_USER}/dd-backend:latest
+    image: jashwanth112002/backend:latest
     container_name: backend_app
     restart: always
-    depends_on:
-      - mongo
     environment:
       - MONGO_URI=mongodb://mongo:27017/ddcrud
-   
+    depends_on:
+      - mongo
 
   frontend:
-    image: ${DOCKER_USER}/dd-frontend:latest
+    image: jashwanth112002/frontend:latest
     container_name: frontend_app
     restart: always
     ports:
       - "80:80"
     depends_on:
       - backend
-
-volumes:
-  mongo_data:
